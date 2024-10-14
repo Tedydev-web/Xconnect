@@ -17,7 +17,7 @@
     "next-cloudinary": "^6.13.0",
     "react": "19.0.0-rc-f994737d14-20240522",
     "react-dom": "19.0.0-rc-f994737d14-20240522",
-    "svix": "^1.36.0",
+    "svix": "^1.37.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
