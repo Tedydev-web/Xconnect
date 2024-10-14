@@ -5,7 +5,7 @@ import prisma from "@/lib/client";
 const Feed = async ({ username }: { username?: string }) => {
   const { userId } = auth();
 
-  let posts:any[] =[];
+  let posts: any[] = [];
 
   if (username) {
     posts = await prisma.post.findMany({
@@ -31,27 +31,9 @@ const Feed = async ({ username }: { username?: string }) => {
         createdAt: "desc",
       },
     });
-  }
-
-  if (!username && userId) {
-    const following = await prisma.follower.findMany({
-      where: {
-        followerId: userId,
-      },
-      select: {
-        followingId: true,
-      },
-    });
-
-    const followingIds = following.map((f) => f.followingId);
-    const ids = [userId,...followingIds]
-
+  } else {
+    // Lấy tất cả các bài đăng mà không cần kiểm tra follow
     posts = await prisma.post.findMany({
-      where: {
-        userId: {
-          in: ids,
-        },
-      },
       include: {
         user: true,
         likes: {
@@ -70,10 +52,11 @@ const Feed = async ({ username }: { username?: string }) => {
       },
     });
   }
+
   return (
     <div className="p-4 bg-white shadow-md rounded-lg flex flex-col gap-12">
-      {posts.length ? (posts.map(post=>(
-        <Post key={post.id} post={post}/>
+      {posts.length ? (posts.map(post => (
+        <Post key={post.id} post={post} />
       ))) : "No posts found!"}
     </div>
   );
