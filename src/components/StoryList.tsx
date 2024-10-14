@@ -76,7 +76,7 @@ const StoryList = ({ stories, userId }: { stories: StoryWithUser[]; userId: stri
 							) : (
 								<span className="font-medium">Add a Story</span>
 							)}
-							<div className="absolute text-6xl text-gray-200 top-1">+</div>
+							<div className="absolute text-6xl text-gray-200 top-1" onClick={() => open()}>+</div>
 						</div>
 					);
 				}}
@@ -87,7 +87,7 @@ const StoryList = ({ stories, userId }: { stories: StoryWithUser[]; userId: stri
 					className="flex flex-col items-center gap-2 cursor-pointer"
 					key={story.id}>
 					<Image
-						src={story.user.avatar || '/noAvatar.png'}
+						src={story.img || '/noAvatar.png'}
 						alt=""
 						width={80}
 						height={80}
