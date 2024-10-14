@@ -31,6 +31,7 @@ const Post = ({ post }: { post: FeedPostType }) => {
               ? post.user.name + " " + post.user.surname
               : post.user.username}
           </span>
+          <p>{ new Date(post.createdAt).toTimeString().split(' ')[0] }</p>
         </div>
         {userId === post.user.id && <PostInfo postId={post.id} />}
       </div>

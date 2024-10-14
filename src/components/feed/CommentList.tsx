@@ -103,6 +103,7 @@ const CommentList = ({
                   ? comment.user.name + " " + comment.user.surname
                   : comment.user.username}
               </span>
+              <p>{ new Date(comment.createdAt).toTimeString().split(' ')[0] }</p>
               <p>{comment.desc}</p>
               <div className="flex items-center gap-8 text-xs text-gray-500 mt-2">
                 <div className="flex items-center gap-4">
