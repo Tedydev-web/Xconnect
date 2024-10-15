@@ -31,22 +31,12 @@ const Post = ({ post }: { post: FeedPostType }) => {
               ? post.user.name + " " + post.user.surname
               : post.user.username}
           </span>
-          <p>{ new Date(post.createdAt).toTimeString().split(' ')[0] }</p>
+          <p>{new Date(post.createdAt).toTimeString().split(' ')[0]}</p>
         </div>
         {userId === post.user.id && <PostInfo postId={post.id} />}
       </div>
       {/* DESC */}
       <div className="flex flex-col gap-4">
-        {post.img && (
-          <div className="w-full min-h-96 relative">
-            <Image
-              src={post.img}
-              fill
-              className="object-cover rounded-md"
-              alt=""
-            />
-          </div>
-        )}
         <p>{post.desc}</p>
       </div>
       {/* INTERACTION */}

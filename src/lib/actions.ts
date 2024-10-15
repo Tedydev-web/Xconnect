@@ -259,36 +259,7 @@ export const addComment = async (postId: number, desc: string) => {
   }
 };
 
-export const addPost = async (formData: FormData, img: string) => {
-  const desc = formData.get("desc") as string;
 
-  const Desc = z.string().min(1).max(255);
-
-  const validatedDesc = Desc.safeParse(desc);
-
-  if (!validatedDesc.success) {
-    //TODO
-    console.log("description is not valid");
-    return;
-  }
-  const { userId } = auth();
-
-  if (!userId) throw new Error("User is not authenticated!");
-
-  try {
-    await prisma.post.create({
-      data: {
-        desc: validatedDesc.data,
-        userId,
-        img,
-      },
-    });
-
-    revalidatePath("/");
-  } catch (err) {
-    console.log(err);
-  }
-};
 
 export const addStory = async (img: string) => {
   const { userId } = auth();
@@ -343,3 +314,57 @@ export const deletePost = async (postId: number) => {
     console.log(err);
   }
 };
+
+export const editPost = async (postId: number, updatedData: { content: string, img: string }) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  try {
+    await prisma.post.update({
+      where: {
+        id: postId,
+        userId, // Truyền `userId` để đảm bảo chỉ cập nhật bài đăng của user hiện tại
+      },
+      data: {
+        desc: updatedData.content,
+        img: updatedData.img,
+      },
+    });    
+    revalidatePath("/") // Sau khi chỉnh sửa, tái xác thực đường dẫn để cập nhật nội dung
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const addPost = async (formData: FormData, img: string) => {
+  const desc = formData.get("desc") as string;
+
+  const Desc = z.string().min(1).max(255);
+
+  const validatedDesc = Desc.safeParse(desc);
+
+  if (!validatedDesc.success) {
+    //TODO
+    console.log("description is not valid");
+    return;
+  }
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  try {
+    await prisma.post.create({
+      data: {
+        desc: validatedDesc.data,
+        userId,
+        img,
+      },
+    });
+
+    revalidatePath("/");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
