@@ -1,15 +1,15 @@
-import Image from "next/image";
-import Comments from "./Comments";
-import { Post as PostType, User } from "@prisma/client";
-import PostInteraction from "./PostInteraction";
-import { Suspense } from "react";
-import PostInfo from "./PostInfo";
-import { auth } from "@clerk/nextjs/server";
+import Image from 'next/image';
+import Comments from './Comments';
+import { Post as PostType, User } from '@prisma/client';
+import PostInteraction from './PostInteraction';
+import { Suspense } from 'react';
+import PostInfo from './PostInfo';
+import { auth } from '@clerk/nextjs/server';
 
 type FeedPostType = PostType & { user: User } & {
-  likes: [{ userId: string }];
+	likes: [{ userId: string }];
 } & {
-  _count: { comments: number };
+	_count: { comments: number };
 };
 
 const Post = ({ post }: { post: FeedPostType }) => {
