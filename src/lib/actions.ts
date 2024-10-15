@@ -321,21 +321,27 @@ export const editPost = async (postId: number, updatedData: { content: string, i
   if (!userId) throw new Error("User is not authenticated!");
 
   try {
+    // Log to check if img is being passed correctly
+    console.log("Updated Data: ", updatedData);
+
     await prisma.post.update({
       where: {
         id: postId,
-        userId, // Truyền `userId` để đảm bảo chỉ cập nhật bài đăng của user hiện tại
+        userId, // Ensures that only the current user's post is updated
       },
       data: {
-        desc: updatedData.content,
-        img: updatedData.img,
+        desc: updatedData.content, // Update description
+        img: updatedData.img, // Update image
       },
-    });    
-    revalidatePath("/") // Sau khi chỉnh sửa, tái xác thực đường dẫn để cập nhật nội dung
+    });
+
+    // Trigger page revalidation after successful edit
+    revalidatePath("/");
   } catch (err) {
     console.log(err);
   }
 };
+
 
 export const addPost = async (formData: FormData, img: string) => {
   const desc = formData.get("desc") as string;

@@ -4,25 +4,23 @@ import { deletePost } from "@/lib/actions";
 import { editPost } from "@/lib/actions";
 import Image from "next/image";
 import { useState } from "react";
-import { CldUploadWidget } from "next-cloudinary";
+import { CldUploadWidget } from 'next-cloudinary';
 
-const PostInfo = ({ postId, initialContent, initialImage }: { postId: number; initialContent: string; initialImage: string }) => {
+const PostInfo = ({ postId, initialContent, Img }: { postId: number; initialContent: string; Img: string }) => {
   const [open, setOpen] = useState(false); // Dropdown toggle state
   const [isEditing, setIsEditing] = useState(false); // Modal toggle state
-  const [content, setContent] = useState(initialContent); // Quản lý nội dung chỉnh sửa
-  const [image, setImage] = useState(initialImage); // Quản lý hình ảnh bài viết
-  const [loading, setLoading] = useState(false); // Trạng thái loading
-
+  const [content, setContent] = useState(initialContent); // Manage post description
+  const [img, setImg] = useState(Img); // Manage post image URL
+  const [loading, setLoading] = useState(false); // Loading state
   const deletePostWithId = deletePost.bind(null, postId);
-
-  // Hàm xử lý khi nhấn nút lưu chỉnh sửa
   const handleEdit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await editPost(postId, { content, image }); // Gửi cả nội dung và ảnh cập nhật
-      setIsEditing(false); // Tắt modal
-      window.location.reload(); // Refresh trang để hiển thị cập nhật
+      // Send updated content and image to the server
+      await editPost(postId, { content, img });
+      setIsEditing(false); // Close modal
+      window.location.reload(); // Reload page to reflect updates
     } catch (err) {
       console.error(err);
     } finally {
@@ -57,26 +55,29 @@ const PostInfo = ({ postId, initialContent, initialImage }: { postId: number; in
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl w-full">
             <h2 className="text-lg font-semibold mb-4">Edit Post</h2>
             <form onSubmit={handleEdit}>
-              {/* Textarea để chỉnh sửa nội dung bài đăng */}
+              {/* Textarea to edit the post description */}
               <textarea
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 rows={5}
                 className="w-full p-2 border rounded mb-4"
               />
-
-              {/* Cloudinary Image Upload Section */}
               <CldUploadWidget
                 uploadPreset="Xconnect"
-                onUpload={(result) => setImage(result.info.secure_url)} // Cập nhật URL ảnh khi tải lên thành công
+                
+                onSuccess={(result) => {
+                  if (result.info) {
+                    setImg(result.info.secure_url); // Use `secure_url` for the image URL
+                  }
+                }}
               >
                 {({ open }) => (
                   <div className="flex flex-col gap-4 my-4" onClick={() => open()}>
-                    <label htmlFor="image-upload">Post Image</label>
+                    <label htmlFor="">Cover Picture</label>
                     <div className="flex items-center gap-2 cursor-pointer">
                       <Image
-                        src={image || "/noImage.png"} // Hiển thị ảnh hiện tại hoặc ảnh mặc định nếu chưa có ảnh
-                        alt="post image"
+                        src={img || '/noCover.png'}
+                        alt=""
                         width={48}
                         height={32}
                         className="w-12 h-8 rounded-md object-cover"
@@ -86,8 +87,7 @@ const PostInfo = ({ postId, initialContent, initialImage }: { postId: number; in
                   </div>
                 )}
               </CldUploadWidget>
-
-              {/* Các nút lưu và hủy */}
+              {/* Save and Cancel Buttons */}
               <div className="flex justify-end gap-4 mt-4">
                 <button
                   type="button"
