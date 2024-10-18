@@ -66,10 +66,10 @@ const PostInfo = ({ postId, initialContent, Img }: { postId: number; initialCont
                 uploadPreset="Xconnect"
                 
                 onSuccess={(result) => {
-                  if (result.info) {
+                  if (result.info && typeof result.info !== 'string' && result.info.secure_url) {
                     setImg(result.info.secure_url); // Use `secure_url` for the image URL
                   }
-                }}
+                }}                
               >
                 {({ open }) => (
                   <div className="flex flex-col gap-4 my-4" onClick={() => open()}>

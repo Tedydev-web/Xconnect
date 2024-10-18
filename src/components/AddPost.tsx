@@ -55,7 +55,6 @@ const AddPost = () => {
 						uploadPreset="Xconnect"
 						onSuccess={(result, { widget }) => {
 							setImg(result.info);
-							widget.close();
 						}}>
 						{({ open }) => {
 							return (
