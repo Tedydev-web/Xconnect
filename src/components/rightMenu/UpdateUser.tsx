@@ -45,7 +45,7 @@ const UpdateUser = ({ user }: { user: User }) => {
 									<div
 										className="flex flex-col gap-4 my-4"
 										onClick={() => open()}>
-										<label htmlFor="">Cover Picture</label>
+										<label htmlFor="">Đổi ảnh bìa</label>
 										<div className="flex items-center gap-2 cursor-pointer">
 											<Image
 												src={user.cover || '/noCover.png'}
@@ -54,7 +54,7 @@ const UpdateUser = ({ user }: { user: User }) => {
 												height={32}
 												className="w-12 h-8 rounded-md object-cover"
 											/>
-											<span className="text-xs underline text-gray-600">Change</span>
+											<span className="text-xs underline text-gray-600">Thay đổi</span>
 										</div>
 									</div>
 								);
@@ -68,11 +68,11 @@ const UpdateUser = ({ user }: { user: User }) => {
 								<label
 									htmlFor=""
 									className="text-xs text-gray-500">
-									First Name
+									Tên
 								</label>
 								<input
 									type="text"
-									placeholder={user.name || 'John'}
+									placeholder={user.name || 'Phát'}
 									className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm"
 									name="name"
 								/>
@@ -81,11 +81,11 @@ const UpdateUser = ({ user }: { user: User }) => {
 								<label
 									htmlFor=""
 									className="text-xs text-gray-500">
-									Surname
+									Họ
 								</label>
 								<input
 									type="text"
-									placeholder={user.surname || 'Doe'}
+									placeholder={user.surname || 'Nguyễn Đăng'}
 									className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm"
 									name="surname"
 								/>
@@ -95,11 +95,11 @@ const UpdateUser = ({ user }: { user: User }) => {
 								<label
 									htmlFor=""
 									className="text-xs text-gray-500">
-									Description
+									Giới thiệu
 								</label>
 								<input
 									type="text"
-									placeholder={user.description || 'Life is beautiful...'}
+									placeholder={user.description || 'Cuộc đời không giống cuộc sống nên không giống cuộc hẹn...'}
 									className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm"
 									name="description"
 								/>
@@ -109,11 +109,11 @@ const UpdateUser = ({ user }: { user: User }) => {
 								<label
 									htmlFor=""
 									className="text-xs text-gray-500">
-									City
+									Thành phố
 								</label>
 								<input
 									type="text"
-									placeholder={user.city || 'New York'}
+									placeholder={user.city || 'Biên Hòa'}
 									className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm"
 									name="city"
 								/>
@@ -124,11 +124,11 @@ const UpdateUser = ({ user }: { user: User }) => {
 								<label
 									htmlFor=""
 									className="text-xs text-gray-500">
-									School
+									Trường học
 								</label>
 								<input
 									type="text"
-									placeholder={user.school || 'MIT'}
+									placeholder={user.school || 'RMIT'}
 									className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm"
 									name="school"
 								/>
@@ -139,11 +139,11 @@ const UpdateUser = ({ user }: { user: User }) => {
 								<label
 									htmlFor=""
 									className="text-xs text-gray-500">
-									Work
+									Công việc
 								</label>
 								<input
 									type="text"
-									placeholder={user.work || 'Apple Inc.'}
+									placeholder={user.work || 'Lao công'}
 									className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm"
 									name="work"
 								/>
@@ -158,7 +158,7 @@ const UpdateUser = ({ user }: { user: User }) => {
 								</label>
 								<input
 									type="text"
-									placeholder={user.website || 'lama.dev'}
+									placeholder={user.website || 'ericss.id.vn'}
 									className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm"
 									name="website"
 								/>

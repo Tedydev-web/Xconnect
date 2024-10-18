@@ -78,7 +78,7 @@ const UserInfoCard = async ({ user }: { user: User }) => {
 							height={16}
 						/>
 						<span>
-							Living in <b>{user.city}</b>
+							Sống tại <b>{user.city}</b>
 						</span>
 					</div>
 				)}
@@ -91,7 +91,7 @@ const UserInfoCard = async ({ user }: { user: User }) => {
 							height={16}
 						/>
 						<span>
-							Went to <b>{user.school}</b>
+							Học tập tại <b>{user.school}</b>
 						</span>
 					</div>
 				)}
@@ -104,36 +104,40 @@ const UserInfoCard = async ({ user }: { user: User }) => {
 							height={16}
 						/>
 						<span>
-							Works at <b>{user.work}</b>
+							Làm việc tại <b>{user.work}</b>
 						</span>
 					</div>
 				)}
 				<div className="flex items-center justify-between">
 					{user.website && (
 						<div className="flex gap-1 items-center">
-							<Image
-								src="/link.png"
-								alt=""
-								width={16}
-								height={16}
-							/>
-							<Link
-								href={user.website}
-								className="text-blue-500 font-medium">
-								{user.website}
-							</Link>
-						</div>
-					)}
-					<div className="flex gap-1 items-center">
 						<Image
-							src="/date.png"
+							src="/link.png"
 							alt=""
 							width={16}
 							height={16}
 						/>
-						<span>Joined {formattedDate}</span>
+						<a
+							href={user.website.startsWith('http') ? user.website : `https://${user.website}`}
+							target="_blank" // Mở link trong tab mới
+							rel="noopener noreferrer" // Đảm bảo an toàn cho liên kết
+							className="text-blue-500 font-medium"
+						>
+							{user.website}
+						</a>
+						</div>
+					)}
+					<div className="flex gap-1 items-center">
+						<Image
+						src="/date.png"
+						alt=""
+						width={16}
+						height={16}
+						/>
+						<span>Tham gia {formattedDate}</span>
 					</div>
-				</div>
+					</div>
+
 				{currentUserId && currentUserId !== user.id && (
 					<UserInfoCardInteraction
 						userId={user.id}

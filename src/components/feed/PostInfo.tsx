@@ -41,10 +41,10 @@ const PostInfo = ({ postId, initialContent, Img }: { postId: number; initialCont
       {open && (
         <div className="absolute top-4 right-0 bg-white p-4 w-32 rounded-lg flex flex-col gap-2 text-xs shadow-lg z-30">
           <span className="cursor-pointer" onClick={() => setIsEditing(true)}>
-            Edit
+            Chỉnh sửa
           </span>
           <form action={deletePostWithId}>
-            <button className="text-red-500">Delete</button>
+            <button className="text-red-500">Xóa bài viết</button>
           </form>
         </div>
       )}
@@ -53,7 +53,7 @@ const PostInfo = ({ postId, initialContent, Img }: { postId: number; initialCont
       {isEditing && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl w-full">
-            <h2 className="text-lg font-semibold mb-4">Edit Post</h2>
+            <h2 className="text-lg font-semibold mb-4">Chỉnh sửa bài viết</h2>
             <form onSubmit={handleEdit}>
               {/* Textarea to edit the post description */}
               <textarea
@@ -73,7 +73,7 @@ const PostInfo = ({ postId, initialContent, Img }: { postId: number; initialCont
               >
                 {({ open }) => (
                   <div className="flex flex-col gap-4 my-4" onClick={() => open()}>
-                    <label htmlFor="">Cover Picture</label>
+                    <label htmlFor="">Ảnh bài viết</label>
                     <div className="flex items-center gap-2 cursor-pointer">
                       <Image
                         src={img || '/noCover.png'}
@@ -82,7 +82,7 @@ const PostInfo = ({ postId, initialContent, Img }: { postId: number; initialCont
                         height={32}
                         className="w-12 h-8 rounded-md object-cover"
                       />
-                      <span className="text-xs underline text-gray-600">Change</span>
+                      <span className="text-xs underline text-gray-600">Thay đổi</span>
                     </div>
                   </div>
                 )}
@@ -94,14 +94,14 @@ const PostInfo = ({ postId, initialContent, Img }: { postId: number; initialCont
                   onClick={() => setIsEditing(false)}
                   className="bg-gray-300 text-gray-700 px-3 py-1 rounded"
                 >
-                  Cancel
+                  Hủy bỏ
                 </button>
                 <button
                   type="submit"
                   className="bg-blue-500 text-white px-3 py-1 rounded"
                   disabled={loading}
                 >
-                  {loading ? "Saving..." : "Save"}
+                  {loading ? "Đang lưu..." : "Lưu"}
                 </button>
               </div>
             </form>
