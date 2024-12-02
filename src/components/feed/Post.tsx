@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import Comments from "./Comments";
 import { Post as PostType, User } from "@prisma/client";
 import PostInteraction from "./PostInteraction";
@@ -14,27 +15,38 @@ type FeedPostType = PostType & { user: User } & {
 
 const Post = ({ post }: { post: FeedPostType }) => {
   const { userId } = auth();
+  const userFullName = post.user.name && post.user.surname
+    ? `${post.user.name}-${post.user.surname}`
+    : post.user.username;
+
+  const profileLink = `/profile/${userFullName}`;
+
   return (
     <div className="flex flex-col gap-4">
       {/* USER */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Image
-            src={post.user.avatar || "/noAvatar.png"}
-            width={40}
-            height={40}
-            alt=""
-            className="w-10 h-10 rounded-full"
-          />
-          <span className="font-medium">
-            {post.user.name && post.user.surname
-              ? post.user.name + " " + post.user.surname
-              : post.user.username}
-          </span>
-          <p>{ new Date(post.createdAt).toTimeString().split(' ')[0] }</p>
-        </div>
-        {userId === post.user.id && <PostInfo postId={post.id} initialContent={post.desc} Img={post.img || ''} />}
+        <Link href={profileLink}>
+          <a className="flex items-center gap-4">
+            <Image
+              src={post.user.avatar || "/noAvatar.png"}
+              width={40}
+              height={40}
+              alt=""
+              className="w-10 h-10 rounded-full"
+            />
+            <span className="font-medium">
+              {post.user.name && post.user.surname
+                ? post.user.name + " " + post.user.surname
+                : post.user.username}
+            </span>
+          </a>
+        </Link>
+        <p>{new Date(post.createdAt).toTimeString().split(" ")[0]}</p>
+        {userId === post.user.id && (
+          <PostInfo postId={post.id} initialContent={post.desc} Img={post.img || ''} />
+        )}
       </div>
+
       {/* DESC */}
       <div className="flex flex-col gap-4">
         {post.img && (
@@ -49,6 +61,7 @@ const Post = ({ post }: { post: FeedPostType }) => {
         )}
         <p>{post.desc}</p>
       </div>
+
       {/* INTERACTION */}
       <Suspense fallback="Loading...">
         <PostInteraction
